@@ -74,7 +74,7 @@ public class HouseController {
         if (house != null) {
             return new ResponseEntity<>(house, null, HttpStatus.OK);
         }
-        else return ResponseEntity.status(HttpStatus.OK).body("No karma in this house yet");
+        else return ResponseEntity.status(HttpStatus.OK).body("No house with such id");
     }
 
 
