@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 public class ApplicationReturnDto {
     private long id;
     private String name;

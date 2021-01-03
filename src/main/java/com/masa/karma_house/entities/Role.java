@@ -4,5 +4,4 @@ public enum Role {
     USER,
     ADMIN,
     ADMIN_HOUSE
-
 }

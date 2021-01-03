@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class HouseReturnDto {
     private long id;
     private String name;
+    private String creator;
 }

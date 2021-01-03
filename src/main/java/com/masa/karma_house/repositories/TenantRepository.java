@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface TenantRepository extends JpaRepository<Tenant, Long> {
 
-    Tenant findByNameAndEmail(String name, String email);
+  //  Tenant findByNameAndEmail(String name, String email);
 
     List<Tenant> findAllByHouseId(long houseId);
 
     void deleteAllByHouseId(long houseId);
+
+    Tenant findByName(String name);
 }

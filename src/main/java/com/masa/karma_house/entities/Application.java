@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @EqualsAndHashCode(of = { "id, name" })
 public class Application {
     public static final int START_SEQ = 1;
@@ -51,11 +52,4 @@ public class Application {
     @Column(name = "approved", nullable = false, columnDefinition = "bool default false")
     private boolean approved;
 
-    public Application(String name, String email, String password, House house, boolean approved) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.house = house;
-        this.approved = approved;
-    }
 }

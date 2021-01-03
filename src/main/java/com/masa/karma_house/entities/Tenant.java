@@ -1,8 +1,6 @@
 package com.masa.karma_house.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.masa.karma_house.dto.HouseReturnDto;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
@@ -12,7 +10,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
+@ToString
 @EqualsAndHashCode(of = { "id, name" })
 
 public class Tenant {
@@ -59,6 +58,7 @@ public class Tenant {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @Singular
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -66,15 +66,4 @@ public class Tenant {
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-
-    public Tenant(String name, House house, long karma_score, String email, String password, String role) {
-        this.name = name;
-        this.house = house;
-        this.karma_score = karma_score;
-        this.email = email;
-        this.password = password;
-        this.roles = new HashSet<>();
-        this.roles.add(Role.valueOf(role));
-
-    }
 }

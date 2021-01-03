@@ -16,7 +16,9 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 @EqualsAndHashCode(of = { "id, name" })
+
 public class TaskLog {
     public static final int START_SEQ = 1;
 

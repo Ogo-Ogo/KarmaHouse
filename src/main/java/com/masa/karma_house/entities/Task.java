@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @EqualsAndHashCode(of = { "id, name" })
 public class Task {
     public static final int START_SEQ = 1;
@@ -34,10 +35,6 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     private House house;
 
-    /*@OneToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "creator")*/
-    //private Tenant tenant;
     @Column(name = "creator")
     private String tenantName;
 
@@ -58,14 +55,4 @@ public class Task {
     @Range(min = 10, max = 5000)
     private long karma_score;
 
-
-    public Task(String name, House house, String tenant, EpicType epic_type, String regularity, String description, long karma_score) {
-        this.name = name;
-        this.house = house;
-        this.tenantName = tenant;
-        this.epictype = epic_type;
-        this.regularity = regularity;
-        this.description = description;
-        this.karma_score = karma_score;
-    }
 }
