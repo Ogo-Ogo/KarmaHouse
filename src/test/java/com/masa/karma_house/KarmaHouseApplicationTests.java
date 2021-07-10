@@ -211,6 +211,25 @@ public class KarmaHouseApplicationTests {
 
     @Transactional
     @Test
+    public void editProfileTest() {
+        UserDto userOne = service.addUser(user1);
+        UserDto userTwo = service.addUser(user2);
+        HouseReturnDto house  = service.addHouse(house1, userOne.getName());
+        ApplicationReturnDto applicationDto = service.applyToBecomeMemberOfHouse(userTwo.getId(), house.getId());
+        TenantDto tenant = service.getAllTenants(house.getId()).stream().filter(c -> c.getName().equalsIgnoreCase(userOne.getName())).collect(Collectors.toList()).get(0);
+        ApplicationReturnDto application = service.getApplication(tenant.getId(), house.getId(), applicationDto.getId());
+        TenantDto tenantNew =  service.addTenant(tenant.getId(), house.getId(), application.getId(), USER_NAME1, Role.USER.toString());
+        Assertions.assertEquals(USER_NAME2, tenantNew.getName());
+        log.error("tenant new " + tenantNew);
+        TenantDto editedTenant = service.editProfile(tenantNew.getId(), TenantEditDto.builder().name(tenantNew.getName()).email("SaraPel@gmail.com").password(tenantNew.getPassword()).build());
+        Assertions.assertEquals("SaraPel@gmail.com", editedTenant.getEmail());
+        service.deleteHouse(house.getId(), userOne.getName());
+        service.removeUser(userOne.getName(), USER_NAME1);
+        service.removeUser(userTwo.getName(), USER_NAME2);
+    }
+
+    @Transactional
+    @Test
     public void changeRoleTest() {
         UserDto userOne = service.addUser(user1);
         UserDto userTwo = service.addUser(user2);

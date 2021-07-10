@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -239,15 +240,19 @@ public class IKarmaHouseImplementation implements IKarmaHouse {
         return listTenantDto;
     }
 
-    @Override
+
+    @Transactional
     public TenantDto editProfile(long tenantId, TenantEditDto tenantDto) {
+        log.info("tenantDto "+ tenantDto);
         Tenant tenant = tenantRepository.findById(tenantId).orElse(null);
         if (tenant != null) {
+            log.info("tenant "+ tenant);
             tenant.setName(tenantDto.getName());
             tenant.setEmail(tenantDto.getEmail());
             String passwordHashed = encoder.encode(tenantDto.getPassword());
             tenant.setPassword(passwordHashed);
             Tenant editedTenant = tenantRepository.save(tenant);
+            log.info("edited tenant " + editedTenant);
             return createTenantDto(editedTenant);
         }
         return null;
